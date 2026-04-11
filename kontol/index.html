@@ -1,244 +1,199 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ujikomkoko</title>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: Arial, Helvetica, sans-serif;
-      }
 
-      body {
-        background: linear-gradient(270deg, #06171f, #2d4b55);
-        color: #e5e7eb;
-      }
-      .dashboard {
-        max-width: 400px;
-        margin: auto;
-        padding: 30px;
-      }
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>UJIKOMPETENSIMILIKKOKO</title>
+      <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: Arial, Helvetica, sans-serif;
+        }
 
-      .dashboard h1 {
-        text-align: center;
-        margin-bottom: 30px;
-        font-size: 28px;
-        letter-spacing: 1px;
-      }
+        body {
+          background: linear-gradient(270deg, #06171f, #2d4b55);
+          color: #e5e7eb;
+        }
+        .dashboard {
+          max-width: 400px;
+          margin: auto;
+          padding: 30px;
+        }
 
-      .card {
-        background: #020617;
-        border-radius: 14px;
-        padding: 20px;
-        margin-bottom: 25px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-      }
+        .dashboard h1 {
+          text-align: center;
+          margin-bottom: 30px;
+          font-size: 28px;
+          letter-spacing: 1px;
+        }
 
-      .card h3 {
-        margin-bottom: 15px;
-        font-size: 20px;
-        border-left: 5px solid #38bdf8;
-        padding-left: 10px;
-      }
+        .card {
+          background: #020617;
+          border-radius: 14px;
+          padding: 20px;
+          margin-bottom: 25px;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
 
-      .divbtn {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: #00041d;
-        border: 1px solid #1e293b;
-        border-radius: 10px;
-        padding: 12px 16px;
-        margin-bottom: 20px;
-        box-shadow: 0 0 0 transparent;
-      }
+        .card h3 {
+          margin-bottom: 15px;
+          font-size: 20px;
+          border-left: 5px solid #38bdf8;
+          padding-left: 10px;
+        }
 
-      .divbtn p {
-        margin: 10px;
-        font-size: 15px;
-      }
+        .divbtn {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background: #00041d;
+          border: 1px solid #1e293b;
+          border-radius: 10px;
+          padding: 12px 16px;
+          margin-bottom: 20px;
+          box-shadow: 0 0 0 transparent;
+        }
 
-      button {
-        padding: 8px 16px;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: bold;
-        transition: 0.2s;
-        width: 100px;
-      }
-      button:hover {
-        box-shadow: 1px 3px 1px rgba(0,0,0,1);
-      }
-      button:active{
-        box-shadow: 0 0 0 rgba(0,0,0,0);
-        transform: translate(1px, 3px);
-      }
-      button
-      .divdata {
-        background: #020617;
-        border: 1px solid #1e293b;
-        border-radius: 12px;
-        padding: 15px;
-      }
+        .divbtn p {
+          margin: 10px;
+          font-size: 15px;
+        }
 
-      .divdata > p {
-        font-weight: bold;
-        margin-bottom: 10px;
-      }
+        button {
+          padding: 8px 16px;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          font-weight: bold;
+          transition: 0.5s;
+          width: 100px;
+        }
+        button:hover {
+          box-shadow: 0px 3px 1px rgba(0,0,0,1);
+        }
+        button:active{
+          box-shadow: 0 0 0 rgba(0,0,0,0);
+          transform: translate(0px, 3px);
+        }
+        button.ON{
+          background-color: var(--btncolor);
+          box-shadow: 0px 0px 10px var(--btncolor);
+        }
 
-      .isidata {
-        display: flex;
-        gap: 15px;
-      }
+      </style>
+  </head>
+  <body>
+  <div class="dashboard">
+    <h1>DASHBOARD IOT by KOKO XII K2</h1>
+    <div class="card">
 
-      .pinfo {
-        background: #1e293b;
-        padding: 10px 15px;
-        border-radius: 8px;
-        font-size: 14px;
-      }
-      .title{
-        font-weight: bold;
-        margin-left: 10px;
-        margin-top: 15px;
-      }
+        <h3>LED CONTROL</h3>
 
+        <div class="divbtn" id="led-merah">
+          <p>LED Merah :</p>
+          <button id="btn-merah">-</button>
+        </div>
 
-    </style>
-</head>
-<body>
-<div class="dashboard">
-  <h1>DASHBOARD IOT by KOKO XII K2</h1>
-  <div class="card">
-<div class="card">
-  <h3>LED CONTROL</h3>
+        <div class="divbtn" id="led-hijau">
+          <p>LED Hijau :</p>
+          <button id="btn-hijau">-</button>
+        </div>
 
-    <div class="divbtn merah" id="led-merah">
-      <p>LED Merah :</p>
-      <button id="btn-merah">-</button>
+        <div class="divbtn" id="led-biru">
+          <p>LED Biru :</p>
+          <button id="btn-biru">-</button>
+        </div>
     </div>
+    <div class="card">
+      <h3>OTHER DATA</h3>
 
-    <div class="divbtn hijau" id="led-hijau">
-      <p>LED Hijau :</p>
-      <button id="btn-hijau">-</button>
-    </div>
+        <div class="divbtn">
+          <p>Servo :</p>
+          <button id="servo">-</button>
+        </div>
 
-    <div class="divbtn biru" id="led-biru">
-      <p>LED Biru :</p>
-      <button id="btn-biru">-</button>
-    </div>
-  </div>
-  </div>
-  <div class="card">
-    <h3>OTHER DATA</h3>
-    <div id="data">
-      <div class="divbtn">
-        <p>Servo :</p>
-        <button id="servo">-</button>
+        <div class="divbtn">
+          <p>Jarak :</p>
+          <p id="jarak"></p>
+        </div>
+
       </div>
-      <div class="divbtn">
-        <p>Jarak :</p>
-        <p id="jarak"></p>
-      </div>      
-    </div>
+
   </div>
+  <script type="module">
 
-</div>
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
-  import { getDatabase, set, ref, onValue } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-database.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+    import { getDatabase, set, ref, onValue } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-database.js";
 
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyBpPqQN9tQbPf2oX2I0ZWo8xEsCdu1l-JE",
-    authDomain: "arduinokokogan.firebaseapp.com",
-    databaseURL: "https://arduinokokogan-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "arduinokokogan",
-    storageBucket: "arduinokokogan.firebasestorage.app",
-    messagingSenderId: "289653445518",
-    appId: "1:289653445518:web:aa6ab9c6b250b72fd34adf",
-    measurementId: "G-DPVF4FHZQK"
-  };
+    const firebaseConfig = {
+      apiKey: "AIzaSyBpPqQN9tQbPf2oX2I0ZWo8xEsCdu1l-JE",
+      authDomain: "arduinokokogan.firebaseapp.com",
+      databaseURL: "https://arduinokokogan-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "arduinokokogan",
+      storageBucket: "arduinokokogan.firebasestorage.app",
+      messagingSenderId: "289653445518",
+      appId: "1:289653445518:web:aa6ab9c6b250b72fd34adf",
+      measurementId: "G-DPVF4FHZQK"
+    };
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-  onValue(ref(db, "LED"), (snapshot) => {
-  const data = snapshot.val();
-  if (!data) return;
-  console.log(data);
-  if (data.biru){
-      document.getElementById("btn-biru").textContent = "NYALA";
-    }
-    else{
-      document.getElementById("btn-biru").textContent = "MATI";
-    }
-  document.getElementById("btn-biru").addEventListener("click", ()=>{
-    if (data.biru){
-      set(ref(db, "LED/biru"), 0);
-      document.getElementById("btn-merah").classList.remove("ON");      
-    }
-    else{
-      set(ref(db, "LED/biru"), 1);
-      document.getElementById("btn-merah").classList.add("ON");
-    }
-  });
-  if (data.merah){
-      document.getElementById("btn-merah").textContent = "NYALA";
-    }
-    else{
-      document.getElementById("btn-merah").textContent = "MATI";
-    }
-  document.getElementById("btn-merah").addEventListener("click", ()=>{
-    if (data.merah){
-      set(ref(db, "LED/merah"), 0);
-      document.getElementById("btn-merah").classList.remove("ON");
-    }
-    else{
-      set(ref(db, "LED/merah"), 1);
-      document.getElementById("btn-merah").classList.add("ON");
-    }
-  });
-  if (data.hijau){
-      document.getElementById("btn-hijau").textContent = "NYALA";
-    }
-    else{
-      document.getElementById("btn-hijau").textContent = "MATI";
-    }
-  document.getElementById("btn-hijau").addEventListener("click", ()=>{
-    if (data.hijau){
-      set(ref(db, "LED/hijau"), 0);
-      document.getElementById("btn-merah").classList.remove("ON");
-    }
-    else{
-      set(ref(db, "LED/hijau"), 1);
-      document.getElementById("btn-merah").classList.add("ON");
-    }
-  });
-  });
-  onValue(ref(db, "servo"), (snapshot) => {
-    const data = snapshot.val();
-    if (!data) return;
-    console.log(data);
-    document.getElementById("servo").textContent = data.servo === 0 ? "TUTUP" : "BUKA";
-    document.getElementById("servo").addEventListener("click", ()=>{
-      set(ref(db, "servo/servo"), data.servo === 0 ? 90 : 0);
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    var DataLED = {};
+    var DataServo = {};
+    onValue(ref(db, "LED"), (snapshot) => {
+      const data = snapshot.val();
+      if (!data) return;
+      DataLED = data;
+
+      LEDUI("merah", data.merah);
+      LEDUI("hijau", data.hijau);
+      LEDUI("biru", data.biru);
+
     });
-  });
-  onValue(ref(db, "jarak"), (snapshot)=>{
-    const data = snapshot.val();
-    if(!data) return;
-    console.log(data);
-    document.getElementById("jarak").textContent = data.jarak + " CM";
-  });
-</script>
-</body>
-</html>
+
+    document.getElementById("btn-merah").addEventListener("click", ()=>{
+      set(ref(db,"LED/merah"), DataLED.merah === 0 ? 1 : 0);
+    });
+    document.getElementById("btn-hijau").addEventListener("click", ()=>{
+      set(ref(db,"LED/hijau"), DataLED.hijau === 0 ? 1 : 0);
+    });
+    document.getElementById("btn-biru").addEventListener("click", ()=>{
+      set(ref(db,"LED/biru"), DataLED.biru === 0 ? 1 : 0);
+    });
+
+    function LEDUI(warna, kondisi){
+      const btn = document.getElementById("btn-"+ warna);
+      const listwarna = {
+        merah: "red",
+        hijau: "green",
+        biru: "blue"
+      };
+      btn.style.setProperty("--btncolor", listwarna[warna]);
+      btn.textContent = kondisi ? "NYALA" : "MATI";
+      kondisi ? btn.classList.add("ON") : btn.classList.remove("ON");
+    }
+
+    onValue(ref(db, "servo"), (snapshot) => {
+      const data = snapshot.val();
+      if (!data) return;
+      DataServo = data;
+
+      document.getElementById("servo").textContent = data.servo === 0 ? "TERTUTUP" : "TERBUKA";
+
+    });
+
+    document.getElementById("servo").addEventListener("click", ()=>{
+      set(ref(db, "servo/servo"), DataServo.servo === 0 ? 90 : 0);
+    });
+
+    onValue(ref(db, "jarak"), (snapshot)=>{
+      const data = snapshot.val();
+      if(!data) return;
+      document.getElementById("jarak").textContent = data.jarak + " CM";
+    });
+  </script>
+  </body>
+  </html>
