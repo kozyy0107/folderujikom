@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+
+
+  
+  <title>Jquery</title>
+</head>
+<body>
+  <h1 id="judul">Heading 1</h1>
+  <button id="merah">Merah</button>
+  <button id="biru">Biru</button>
+  <button id="hijau">Green</button>
+  <table>
+    <tr>
+      
+    </tr>
+  </table>
+  <script>
+    const judul = $("#judul");
+
+    const warna = {
+      merah : "#ff0000",
+      hijau : "#00ff00",
+      biru : "#0000ff"
+    };
+     $("button").click(function(){
+      let btn = $(this).attr("id");
+      judul.text(btn);
+      judul.css("color", warna[btn]);
+      let td = $("<td width='20px' height='10px'></td>");
+      td.css("background-color", warna[btn]);
+      $("tr").append(td);
+    });
+
+  </script>
+</body>
+</html>
