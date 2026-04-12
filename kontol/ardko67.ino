@@ -15,6 +15,24 @@ int pos = 0;
 long durasi;
 float jarak;
 
+void connectWiFi() {
+    WiFi.disconnect();
+    delay(1000);
+    Serial.println();
+    Serial.println();
+    Serial.print("Menyambungkan ke: ");
+    Serial.println(WIFI_SSID);
+    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+
+    while (WiFi.status() != WL_CONNECTED) {
+        Serial.print("-");
+        delay(500);
+    }
+    Serial.println();
+    Serial.println("WiFi Tersambung");
+    Serial.println();
+}
+
 void setup() {
     Serial.begin(115200);
     pinMode(D1, OUTPUT);//red
@@ -33,24 +51,7 @@ void setup() {
         digitalWrite(LED_BUILTIN, LOW);
     #endif
     
-    WiFi.disconnect();
-    delay(1000);
-
-    /* Connect to WiFi */
-    Serial.println();
-    Serial.println();
-    Serial.print("Menyambungkan ke: ");
-    Serial.println(WIFI_SSID);
-    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-
-    while (WiFi.status() != WL_CONNECTED) {
-        Serial.print("-");
-        delay(500);
-    }
-
-    Serial.println();
-    Serial.println("WiFi Tersambung");
-    Serial.println();
+    connectWiFi();
 
     // Turn on built-in LED for UNO R4 WiFi
     #if defined(ARDUINO_UNOWIFIR4)
@@ -59,31 +60,26 @@ void setup() {
 
     /* ===== JSON SERIALIZATION: CREATE AND SEND DATA ===== */
     
-    Serial.println("Membuat Data JSON");
+    Serial.println("Memulai Inisialisasi");
 
-    // Create a JSON document to hold the output data
-    StaticJsonDocument<255> leddoc;
+    StaticJsonDocument<255> leddoc, servodoc;
 
-    // Add various data types to the JSON document
     leddoc["merah"] = 0;
     leddoc["hijau"] = 0;
     leddoc["biru"] = 0;
-    // Mengirim langsung karena hanya 1 data
-    fb.setInt("servo/servo", 0);
-    fb.setInt("jarak/jarak", 0);
+    servodoc["servo"] = 0;
+    int resJarak= fb.setInt("jarak/jarak", 0);
   
-    // Create a string to hold the serialized JSON data
-    String ledjson;
+    String ledjson, servojson;
 
-    // Serialize the JSON document to a string
     serializeJson(leddoc, ledjson);
-    Serial.println("Data JSON yang dibuat:");
+    serializeJson(servodoc, servojson);
     Serial.println(ledjson);
+    Serial.println(servojson);
     Serial.println();
 
-    // Set the serialized JSON data in Firebase
-    Serial.println("Mengirim JSON ke Firebase");
-    int resLED   = fb.setJson("LED", ledjson);
+    int resLED = fb.setJson("LED", ledjson);
+    int resServo = fb.setJson("servo", servojson);
 
     if (resLED == 200 && resServo == 200 && resJarak == 200) {
         Serial.println("JSON berhasil dikirim!");
@@ -94,9 +90,14 @@ void setup() {
 }
 
 void loop() {
+    if (WiFi.status() != WL_CONNECTED) {
+        Serial.println("WiFi putus, reconnecting...");
+        connectWiFi();
+        return;
+    }
+
   Serial.println("Mengambil data JSON dari Firebase");
 
-  // Retrieve the serialized JSON data from Firebase
   String ledjson, servojson;
   int resLED = fb.getJson("LED", ledjson);
   int resServo = fb.getJson("servo", servojson);
@@ -112,10 +113,8 @@ void loop() {
   Serial.println(servojson);
   Serial.println();
 
-  // Create a JSON document to hold the deserialized data
   StaticJsonDocument<255> docled, docservo;
 
-  // Menguraikan Data JSON dalam bentuk String
   if (deserializeJson(docled, ledjson)) {
       Serial.println("LED JSON error");
       return;
@@ -128,13 +127,11 @@ void loop() {
 
   Serial.println("Mengurai data JSON");
 
-  // Mengambil Data dari JSON yang sudah di urai
   int LED1 = docled["merah"];
   int LED2 = docled["hijau"];  
   int LED3 = docled["biru"];
   pos = docservo["servo"]; 
   
-  /* Menampilkan Data yang sudah di urai */
   Serial.println("---Data yang terurai---");
   Serial.print(" merah: ");
   Serial.println(LED1);
@@ -145,15 +142,13 @@ void loop() {
   Serial.print("Posisi Servo: ");
   Serial.println(pos);
   
-  // membaca data LED dari firebase
   Serial.println();
   digitalWrite(D1, LED1);
   digitalWrite(D2, LED2);
   digitalWrite(D3, LED3);
-  // Membaca data posisi dari Firebase
   pos = constrain(pos, 0, 90);
   myservo.write(pos);
-  // Bersihkan trigPin
+
   digitalWrite(D6, LOW);
   delayMicroseconds(2);
   digitalWrite(D6, HIGH);
@@ -161,12 +156,12 @@ void loop() {
   digitalWrite(D6, LOW);
 
   durasi= pulseIn(D7, HIGH);
-  jarak = durasi * 0.034 / 2; // Hitung cm
+  jarak = durasi * 0.034 / 2;
 
   Serial.print("Jarak: ");
   Serial.print(jarak);
   Serial.println(" cm");
-  fb.setInt("jarak/jarak", jarak);
+  fb.setFloat("jarak/jarak", jarak);
   delay(5000);
 
 }
