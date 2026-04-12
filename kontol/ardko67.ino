@@ -5,10 +5,8 @@
 #define WIFI_PASSWORD "ADINATA12311"
 #define REFERENCE_URL "https://arduinokokogan-default-rtdb.asia-southeast1.firebasedatabase.app/"
 
-/* Use the following instance for Test Mode (No Authentication) */
 Firebase fb(REFERENCE_URL);
 
-/* Use the following instance for Locked Mode (With Authentication) */
 // Firebase fb(REFERENCE_URL, AUTH_TOKEN);
 
 Servo myservo;
@@ -62,43 +60,30 @@ void setup() {
     /* ===== JSON SERIALIZATION: CREATE AND SEND DATA ===== */
     
     Serial.println("Membuat Data JSON");
-    
-    /*
-      For guidance on serialization and deserialization, visit:
-      https://arduinojson.org/v7/assistant/
-    */
 
     // Create a JSON document to hold the output data
-    StaticJsonDocument<255> leddoc, servodoc, jarakdoc;
+    StaticJsonDocument<255> leddoc;
 
     // Add various data types to the JSON document
     leddoc["merah"] = 0;
     leddoc["hijau"] = 0;
     leddoc["biru"] = 0;
-    servodoc["servo"] = 0;
-    jarakdoc["jarak"] = 0;
-
+    // Mengirim langsung karena hanya 1 data
+    fb.setInt("servo/servo", 0);
+    fb.setInt("jarak/jarak", 0);
   
     // Create a string to hold the serialized JSON data
-    String ledjson, servojson, jarakjson;
-
-    
+    String ledjson;
 
     // Serialize the JSON document to a string
     serializeJson(leddoc, ledjson);
-    serializeJson(servodoc, servojson);
-    serializeJson(jarakdoc, jarakjson);
     Serial.println("Data JSON yang dibuat:");
     Serial.println(ledjson);
-    Serial.println(servojson);
-    Serial.println(jarakjson);
     Serial.println();
 
     // Set the serialized JSON data in Firebase
     Serial.println("Mengirim JSON ke Firebase");
     int resLED   = fb.setJson("LED", ledjson);
-    int resServo = fb.setJson("servo", servojson);
-    int resJarak = fb.setJson("jarak", jarakjson);
 
     if (resLED == 200 && resServo == 200 && resJarak == 200) {
         Serial.println("JSON berhasil dikirim!");
@@ -106,8 +91,6 @@ void setup() {
         Serial.println("Ada JSON yang gagal dikirim!");
     }
     Serial.println();
-
-   
 }
 
 void loop() {
@@ -132,7 +115,7 @@ void loop() {
   // Create a JSON document to hold the deserialized data
   StaticJsonDocument<255> docled, docservo;
 
-  // Deserialize the JSON string into the JSON document
+  // Menguraikan Data JSON dalam bentuk String
   if (deserializeJson(docled, ledjson)) {
       Serial.println("LED JSON error");
       return;
@@ -145,13 +128,13 @@ void loop() {
 
   Serial.println("Mengurai data JSON");
 
-  // Extract the values from the deserialized JSON document
+  // Mengambil Data dari JSON yang sudah di urai
   int LED1 = docled["merah"];
   int LED2 = docled["hijau"];  
   int LED3 = docled["biru"];
   pos = docservo["servo"]; 
   
-  /* Print the deserialized data */
+  /* Menampilkan Data yang sudah di urai */
   Serial.println("---Data yang terurai---");
   Serial.print(" merah: ");
   Serial.println(LED1);
@@ -184,6 +167,6 @@ void loop() {
   Serial.print(jarak);
   Serial.println(" cm");
   fb.setInt("jarak/jarak", jarak);
-  delay(10000);
+  delay(5000);
 
 }
