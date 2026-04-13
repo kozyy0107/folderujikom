@@ -1,9 +1,9 @@
 #include <Firebase.h>
 #include <Servo.h>
 #include <ArduinoJson.h>
-#define WIFI_SSID     "ADINATA"
-#define WIFI_PASSWORD "ADINATA12311"
-#define REFERENCE_URL "https://arduinokokogan-default-rtdb.asia-southeast1.firebasedatabase.app/"
+#define WIFI_SSID     "Labkom2C"
+#define WIFI_PASSWORD "11223344"
+#define REFERENCE_URL "https://ukk-250201011602392-default-rtdb.asia-southeast1.firebasedatabase.app/"
 
 Firebase fb(REFERENCE_URL);
 
@@ -146,7 +146,7 @@ void loop() {
   digitalWrite(D1, LED1);
   digitalWrite(D2, LED2);
   digitalWrite(D3, LED3);
-  pos = constrain(pos, 0, 90);
+  pos = constrain(pos, 0, 180);
   myservo.write(pos);
 
   digitalWrite(D6, LOW);
@@ -162,6 +162,7 @@ void loop() {
   Serial.print(jarak);
   Serial.println(" cm");
   fb.setFloat("jarak/jarak", jarak);
+  Serial.println("");
   delay(5000);
 
 }
